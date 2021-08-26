@@ -5,7 +5,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +28,6 @@ import com.ict.vo.BVO;
 import com.ict.vo.FVO;
 import com.ict.vo.MVO;
 import com.ict.vo.VO;
-import com.mysql.cj.Session;
 
 @Controller
 public class MyController 
@@ -46,9 +44,8 @@ public class MyController
 	{
 		ModelAndView mv = new ModelAndView("main");
 		String start = (String)session.getAttribute("msg");
-		String str = start.substring(0,10);
-		System.out.println(str);
-		session.setAttribute("str", str);
+		// String str = start.substring(0,10);
+		// System.out.println(str);
 		mv.addObject("cPage", cPage);
 		return mv;
 	}
@@ -115,9 +112,26 @@ public class MyController
 			mv.addObject("home", result.getHome());
 			mv.addObject("restaurant_time", result.getRestaurant_time());
 			mv.addObject("file_name", result.getFile_name());
-			mv.addObject("star", result.getStar());
-			mv.addObject("like", result.getLike());
 			mv.addObject("menupan", result.getMenupan());
+			
+			int res = myservice.selectStar(result.getRestaurant());
+			int res2 = myservice.selectlike(result.getRestaurant());
+			int count = myservice.selectFVOcount(result.getRestaurant());
+			int star = (res/count);
+			
+			vo.setStar(star);
+			vo.setLike(res2);
+			// vo.setRestaurant(result.getRestaurant());
+			int res3 = myservice.updatestar_like(vo);
+			mv.addObject("food_star", star);
+			mv.addObject("food_like", res2);
+			mv.addObject("count", count);
+			
+			
+			List<FVO> list = myservice.selectFVOList(result.getRestaurant());
+			if (list != null) {
+				mv.addObject("list", list);
+			}
 			return mv;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -240,10 +254,19 @@ public class MyController
 	}
 	
 	@RequestMapping("write4.do")
-	public ModelAndView write4Command(@ModelAttribute("cPage")String cPage)
+	public ModelAndView write4Command(@ModelAttribute("cPage")String cPage, @ModelAttribute("content")String content,
+			HttpSession session, @ModelAttribute("restaurant")String restaurant)
 	{
 		ModelAndView mv = new ModelAndView("write4");
 		mv.addObject("cPage", cPage);
+		mv.addObject("content", content);
+		mv.addObject("restaurant", restaurant);
+		if (session.getAttribute("login_ok") == "1") {
+			mv.addObject("writer", session.getAttribute("id"));
+		}else
+		{
+			mv.addObject("writer", "비회원");
+		}
 		return mv;
 	}
 	
@@ -698,6 +721,45 @@ public class MyController
 			System.out.println(e);
 		}
 		return null;
+	}
+	
+	@RequestMapping("FVOboard.do")
+	public ModelAndView FVOboardCommand(@ModelAttribute("cPage")String cPage, HttpServletRequest request)
+	{
+		ModelAndView mv = new ModelAndView("FVOboard");
+		FVO fvo = new FVO();
+		fvo.setIdx(request.getParameter("idx"));
+		try {
+			FVO result = myservice.selectFVOone(fvo.getIdx());
+			mv.addObject("writer", result.getWriter());
+			mv.addObject("content", result.getContent());
+			mv.addObject("food_star", result.getFood_star());
+			mv.addObject("food_like", result.getFood_like());
+			return mv;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	@RequestMapping("FVOboard_ok.do")
+	public ModelAndView FVOboard_okCommand(@ModelAttribute("cPage")String cPage, HttpServletRequest request)
+	{
+		FVO fvo = new FVO();
+		fvo.setWriter(request.getParameter("id"));
+		fvo.setContent(request.getParameter("content"));
+		fvo.setRestaurant(request.getParameter("restaurant"));
+		fvo.setFood_star(request.getParameter("food_star"));
+		fvo.setFood_like(request.getParameter("food_like"));
+		try {
+			int result = myservice.InsertFVO(fvo);
+			if (result == 1) {
+				return new ModelAndView("redirect:main.do?");
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return new ModelAndView("redirect:write4.do?");
 	}
 	
 	@RequestMapping("mypage_ok.do")

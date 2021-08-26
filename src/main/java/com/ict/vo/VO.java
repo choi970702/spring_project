@@ -21,16 +21,11 @@ public class VO {
 	public void setM_menupan(MultipartFile m_menupan) {
 		this.m_menupan = m_menupan;
 	}
-	
-	
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public int getLike() {
-		return like;
 	}
 	public String getFood_name() {
 		return Food_name;
@@ -49,18 +44,6 @@ public class VO {
 	}
 	public void setPlace(String place) {
 		this.place = place;
-	}
-	public int getStar() {
-		return star;
-	}
-	public void setStar(int star) {
-		this.star = star;
-	}
-	public int isLike() {
-		return like;
-	}
-	public void setLike(int like) {
-		this.like = like;
 	}
 	public String getFile_name() {
 		return file_name;
@@ -92,6 +75,19 @@ public class VO {
 	public void setF_name(MultipartFile f_name) {
 		this.f_name = f_name;
 	}
+	public int getStar() {
+		return star;
+	}
+	public void setStar(int star) {
+		this.star = star;
+	}
+	public int getLike() {
+		return like;
+	}
+	public void setLike(int like) {
+		this.like = like;
+	}
+	
 	
 	
 	

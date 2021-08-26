@@ -134,6 +134,46 @@
 		select * from myproject_vo where id = #{id} and restaurant = #{restaurant}
 	</select>
 	
+	<select id="FVOlist" parameterType="String" resultType="com.ict.vo.FVO">
+		<!-- select * from (
+			select rownum r_num, a.* from (
+				select * from myfood order by idx desc
+			) a
+		) where r_num between #{begin} and #{end} -->
+		select * from myfood where restaurant = #{restaurant} order by food_star desc
+	</select>
+	
+	<!-- <insert id="FVOinsert" parameterType="com.ict.vo.FVO">
+		insert into myfood(idx,writer,content,restaurant,food_star,food_like) 
+ 		values(myfood_seq.nextval, #{writer},#{content},#{restaurant},#{food_star},#{food_like})
+	</insert> -->
+	
+	<!-- idx값 -->
+	<insert id="FVOinsert" parameterType="com.ict.vo.FVO">
+		insert into myfood(idx,writer,content,restaurant,food_star,food_like) 
+ 		values(3, #{writer},#{content},#{restaurant},#{food_star},#{food_like})
+	</insert>
+	
+	<select id="FVOone" parameterType="String" resultType="com.ict.vo.FVO">
+		select * from myfood where idx = #{idx}
+	</select>
+	
+	<select id="star" parameterType="String" resultType="int">
+		select sum(food_star) from myfood where restaurant = #{restaurant}
+	</select>
+	
+	<select id="like" parameterType="String" resultType="int">
+		select sum(food_like) from myfood where restaurant = #{restaurant}
+	</select>
+	
+	<select id="FVO_count" parameterType="String" resultType="int">
+		select count(*) from myfood where restaurant = #{restaurant}
+	</select>
+	
+	<update id="star_like" parameterType="com.ict.vo.VO">
+		update myproject_vo set food_star = #{star}, food_like = #{like} where restaurant = #{restaurant}
+	</update>
+	
 </mapper>
  
  

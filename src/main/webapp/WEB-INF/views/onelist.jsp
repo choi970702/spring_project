@@ -109,6 +109,28 @@
 		float: left;
 		margin: auto;
 	}
+	table,th,td
+	{
+		border: 1px solid gray;
+		border-spacing: 0px;
+		padding: 1%;
+	}
+	tr 
+	{
+		
+	    text-align:center;
+	    padding:2px 6px;
+	    background-color: #F6F6F6;
+	    margin: 0px;
+	}
+	
+	th 
+	{
+	    text-align:center;
+	    padding:2px 6px;
+	    background-color: silver;
+	    margin: 0px;
+	}
 </style>
 <script type="text/javascript">
 	function way() 
@@ -118,6 +140,11 @@
 	function boardlist() 
 	{
 		location.href="board.do?cPage=${cPage}";
+	}
+	function write4(f) 
+	{
+		f.action="write4.do?cPage=${cPage}&restaurant=${restaurant}";
+		f.submit();
 	}
 </script>
 </head>
@@ -147,31 +174,55 @@
 					영업시간 : ${restaurant_time }<br>
 					전화번호 : ${phone }<br>
 					주소 : ${place }<br>
-					별점 : ${star }<br>
-					평점 : ${like }<br>
+					별점 : ${food_star }<br>
+					추천 : ${food_like }/${count }<br>
 				</span>
 				<button onclick="way()">길찾기</button>
 			</div>
 			<div>
 				<table id="table">
 					<thead>
-						<tr>
-							<th>번호</th>
-							<th>글쓴이</th>
-							<th>내용</th>
-						</tr>
+						<c:choose>
+							<c:when test="${empty list}">
+								<tr>
+									<td colspan="4"><h3>원하시는 자료가 존재하지 않습니다</h3></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<th>번호</th>
+									<th>글쓴이</th>
+									<th>내용</th>
+								</tr>
+							</c:otherwise>
+						</c:choose>
 					</thead>
 					<tbody>
-						<tr>
-							<td>.</td>
-							<td>.</td>
-							<td>.</td>
-						</tr>
+						<c:choose>
+							<c:when test="${empty list}">
+								<tr>
+									<td colspan="4"><h3>원하시는 자료가 존재하지 않습니다</h3></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="k" items="${list}" varStatus="vs">
+									<tr>
+										<td>${k.idx}</td>
+										<td style="text-align: left;">
+											<a href="FVOboard.do?idx=${k.idx}&cPage=${cPage}">${k.writer }</a>
+										</td>
+										<td>${k.content }</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 				<form id="review">
 					<input id="review_write" type="text" placeholder="리뷰쓰기">
-					<input id="review_btn" type="submit" value="write">
+					<input id="review_btn" type="submit" value="write" onclick="write4(this.form)">
+					<input type="hidden" name="cPage" value="${cPage }">
+					<input type="hidden" name="restaurant" value="${restaurant }">
 				</form>
 			</div>
 			<div>

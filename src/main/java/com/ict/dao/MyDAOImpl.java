@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ict.vo.BVO;
+import com.ict.vo.FVO;
 import com.ict.vo.MVO;
 import com.ict.vo.VO;
 
@@ -20,35 +21,7 @@ public class MyDAOImpl implements MyDAO
 
 
 
-	@Override
-	public int updateHit(String idx) throws Exception {
-		return sqlSessionTemplate.update("board.updateHit", idx);
-	}
-
 	
-
-	@Override
-	public int updateLevUp(Map<String, Integer> map) throws Exception {
-		return sqlSessionTemplate.update("board.lev_up", map);
-	}
-	
-	@Override
-	public int InsertAns(MVO vo) throws Exception {
-		return sqlSessionTemplate.insert("board.ans_insert", vo);
-	}
-	@Override
-	public int selectPwdChk(MVO vo) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectOne("board.pwd_chk", vo);
-	}
-	
-
-
-	@Override
-	public int deleteAns(String idx) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	// ================================================================
 	
@@ -182,6 +155,43 @@ public class MyDAOImpl implements MyDAO
 	@Override
 	public VO selectVO(VO vo) throws Exception {
 		return sqlSessionTemplate.selectOne("myproject.selectvo", vo);
+	}
+
+
+
+	@Override
+	public List<FVO> selectFVOList(String restaurant) throws Exception {
+		return sqlSessionTemplate.selectList("myproject.FVOlist", restaurant);
+	}
+
+	@Override
+	public int InsertFVO(FVO fvo) throws Exception {
+		return sqlSessionTemplate.insert("myproject.FVOinsert", fvo);
+	}
+
+	@Override
+	public FVO selectFVOone(String idx) throws Exception {
+		return sqlSessionTemplate.selectOne("myproject.FVOone", idx);
+	}
+
+	@Override
+	public int selectStar(String restaurant) throws Exception {
+		return sqlSessionTemplate.selectOne("myproject.star", restaurant);
+	}
+	
+	@Override
+	public int selectlike(String restaurant) throws Exception {
+		return sqlSessionTemplate.selectOne("myproject.like", restaurant);
+	}
+	
+	@Override
+	public int selectFVOcount(String restaurant) throws Exception {
+		return sqlSessionTemplate.selectOne("myproject.FVO_count", restaurant);
+	}
+
+	@Override
+	public int updatestar_like(VO vo) throws Exception {
+		return sqlSessionTemplate.update("myproject.star_like", vo);
 	}
 	
 }

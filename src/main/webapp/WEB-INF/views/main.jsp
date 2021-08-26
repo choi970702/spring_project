@@ -148,14 +148,24 @@
 		<div>
 			<fieldset>
 				<legend>먹을거리 추천</legend>
-				<div>
-					<img alt="" src="resources/image/pic1.jpg">
-					<textarea>~~~~~~~~~~~</textarea>
-				</div>
-				<div>
-					<img alt="" src="resources/image/pic1.jpg">
-					<textarea>~~~~~~~~~~~</textarea>
-				</div>
+				<%-- <c:choose>
+					<c:when test="${empty list}">
+						<tr>
+							<td colspan="4"><h2>원하시는 자료가 존재하지 않습니다</h2></td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="k" items="${list}" varStatus="vs">
+							<tr>
+								<td>${pvo.totalRecord-((pvo.nowPage-1)*pvo.numPerPage+vs.index)}</td>
+								<td style="text-align: left;"><a
+									href="onelist.do??id=${id}&cPage=${pvo.nowPage}&restaurant=${k.restaurant}">${k.Food_name }</a>
+								</td>
+								<td>${k.title }</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose> --%>
 			</fieldset>
 		</div>
 		<div>

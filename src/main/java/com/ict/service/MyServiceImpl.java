@@ -1,13 +1,13 @@
 package com.ict.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ict.dao.MyDAO;
 import com.ict.vo.BVO;
+import com.ict.vo.FVO;
 import com.ict.vo.MVO;
 import com.ict.vo.VO;
 
@@ -19,36 +19,7 @@ public class MyServiceImpl implements MyService
 
 
 
-	@Override
-	public int updateHit(String idx) throws Exception {
-		return myDAO.updateHit(idx);
-	}
-
 	
-
-	@Override
-	public int updateLevUp(Map<String, Integer> map) throws Exception {
-		return myDAO.updateLevUp(map);
-	}
-	
-	@Override
-	public int InsertAns(MVO vo) throws Exception {
-		return myDAO.InsertAns(vo);
-	}
-	
-	@Override
-	public int selectPwdChk(MVO vo) throws Exception {
-		// TODO Auto-generated method stub
-		return myDAO.selectPwdChk(vo);
-	}
-
-
-
-	@Override
-	public int deleteAns(String idx) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	// =================================================================
 	
@@ -174,6 +145,44 @@ public class MyServiceImpl implements MyService
 	@Override
 	public VO selectVO(VO vo) throws Exception {
 		return myDAO.selectVO(vo);
+	}
+
+
+
+
+	@Override
+	public List<FVO> selectFVOList(String restaurant) throws Exception {
+		return myDAO.selectFVOList(restaurant);
+	}
+
+	@Override
+	public int InsertFVO(FVO fvo) throws Exception {
+		return myDAO.InsertFVO(fvo);
+	}
+
+	@Override
+	public FVO selectFVOone(String idx) throws Exception {
+		return myDAO.selectFVOone(idx);
+	}
+
+	@Override
+	public int selectStar(String restaurant) throws Exception {
+		return myDAO.selectStar(restaurant);
+	}
+	
+	@Override
+	public int selectlike(String restaurant) throws Exception {
+		return myDAO.selectlike(restaurant);
+	}
+	
+	@Override
+	public int selectFVOcount(String restaurant) throws Exception {
+		return myDAO.selectFVOcount(restaurant);
+	}
+
+	@Override
+	public int updatestar_like(VO vo) throws Exception {
+		return myDAO.updatestar_like(vo);
 	}
 	
 }

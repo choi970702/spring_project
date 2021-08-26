@@ -47,7 +47,7 @@
 	{
 		width: 90%;
 		margin: auto;
-		height: 400px;
+		height: 500px;
 		margin-bottom: 5%;
 	}
 	tr
@@ -60,15 +60,16 @@
 	}
 </style>
 <script type="text/javascript">
-	function writeok() 
+	function writeok(f) 
 	{
 		alert("저장");
-		location.href="mypage.do?cPage=${cPage}";
+		f.action="FVOboard_ok.do?cPage=${cPage}&restaurant=${restaurant}";
+		f.submit();
 	}
 	function writeno() 
 	{
 		alert("취소");
-		location.href="mypage.do?cPage=${cPage}";
+		location.href="main.do?cPage=${cPage}";
 	}
 </script>
 </head>
@@ -77,39 +78,56 @@
 	<%@ include file="top.jsp" %>
 	<div>
 		<fieldset>
-			<table>
-				<thead>
-					<tr>
-						<th></th><th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td style="width: 20%; height: 5%;">작성자</td>
-						<td><input type="text" name="id" value="${mvo.id }" readonly="readonly"></td>
-					</tr>
-					<tr>
-						<td style="height: 5%;">제목</td>
-						<td><input type="text" name="title" placeholder="제목입력" required></td>
-					</tr>
-					<tr>
-						<td>내용</td>
-						<td><input type="text" name="content" placeholder="내용입력" required></td>
-					</tr>
-					<tr>
-						<td>답글</td>
-						<td><input type="text" name="content" placeholder="답글 내용" readonly></td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="2">
-							<button value="" onclick="writeok()">저장</button>
-							<button value="" onclick="writeno()">취소</button>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
+			<form>
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="width: 20%; height: 5%;">작성자</td>
+							<td><input type="text" name="id" value="${writer }"
+								readonly="readonly"></td>
+						</tr>
+						<tr>
+							<td>내용</td>
+							<td>
+								<input type="text" style="height: 200px;" name="content" value="${content }" placeholder="내용입력" >
+							</td>
+						</tr>
+						<tr>
+							<td>별점</td>
+							<td>
+								<input type="radio" name="food_star" value="1">1점
+								<input type="radio" name="food_star" value="2">2점
+								<input type="radio" name="food_star" value="3">3점
+								<input type="radio" name="food_star" value="4">4점
+								<input type="radio" name="food_star" checked="checked" value="5">5점
+							</td>
+						</tr>
+						<tr>
+							<td>추천</td>
+							<td>
+								<input type="radio" name="food_like" checked="checked" value="1"> 추천
+								<input type="radio" name="food_like" value="0"> 추천안함
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="2">
+								<input type="button" style="width: 30%;" value="저장" onclick="writeok(this.form)">
+								<input type="button" style="width: 30%;" value="취소" onclick="writeno()">
+								<input type="hidden" name="cPage" value="${cPage }">
+								<input type="hidden" name="restaurant" value="${restaurant }">
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</form>
 		</fieldset>
 	</div>
 	<div>

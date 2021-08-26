@@ -2,7 +2,7 @@ package com.ict.vo;
 
 
 public class FVO {
-	private String idx, writer, content, Food_name, restaurant, place;
+	private String idx, writer, content, Food_name, restaurant, place, food_star, food_like;
 	
 	
 	
@@ -41,6 +41,18 @@ public class FVO {
 	}
 	public void setPlace(String place) {
 		this.place = place;
+	}
+	public String getFood_star() {
+		return food_star;
+	}
+	public void setFood_star(String food_star) {
+		this.food_star = food_star;
+	}
+	public String getFood_like() {
+		return food_like;
+	}
+	public void setFood_like(String food_like) {
+		this.food_like = food_like;
 	}
 	
 	

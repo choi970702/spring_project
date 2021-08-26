@@ -1,9 +1,9 @@
 package com.ict.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.ict.vo.BVO;
+import com.ict.vo.FVO;
 import com.ict.vo.MVO;
 import com.ict.vo.VO;
 
@@ -11,25 +11,6 @@ public interface MyService
 {
 
 	
-
-	// 원글 히트 업데이트
-	int updateHit(String idx) throws Exception;
-
-	
-
-	// 레벨업
-	int updateLevUp(Map<String, Integer> map) throws Exception;
-
-
-	// 댓글 삽입
-	int InsertAns(MVO vo) throws Exception;
-
-
-	// 댓글 삭제
-	int deleteAns(String idx) throws Exception;
-
-	// 수정, 삭제, 비번 체크
-	int selectPwdChk(MVO vo) throws Exception;
 	
 	// =========================================================================
 
@@ -105,5 +86,25 @@ public interface MyService
 	// onelist
 	VO selectVO(VO vo) throws Exception;
 	
+	// FVO list
+	List<FVO> selectFVOList(String restaurant) throws Exception;
+	
+	// FVO 삽입
+	int InsertFVO(FVO fvo) throws Exception;
+	
+	// FVO onelist
+	FVO selectFVOone(String idx) throws Exception;
+	
+	// star 점수계산
+	int selectStar(String restaurant) throws Exception;
+	
+	// star 점수계산
+	int selectlike(String restaurant) throws Exception;
+	
+	// FVO count
+	int selectFVOcount(String restaurant) throws Exception;
+	
+	// vo star, like 점수 넣기
+	int updatestar_like(VO vo) throws Exception;
 	
 }
