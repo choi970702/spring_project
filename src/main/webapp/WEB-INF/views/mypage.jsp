@@ -294,28 +294,11 @@
 					<c:when test="${login_ok == '1' }">
 						<c:choose>
 							<c:when test="${u_id == '1' } ">
-								<%-- <tr>
-									<td style="text-align: left;"><a
-										href="onelist.do?id=${k.id}&cPage=${pvo.nowPage}">${k.restaurant }</a>
-									</td> 가게 등록
-									<td><button onclick="food_del(${k.id})">삭제</button></td>
-								</tr> --%>
-								<%-- <form>
-									<input type="text" value="" name="Food_name">
-									<input type="text" value="" name="restaurant">
-									<input type="text" value="" name="place">
-									<input type="text" value="" name="phone">
-									<input type="text" value="" name="restaurant_time">
-									<input type="text" value="" name="home">
-									<input type="file" value="" name="f_name">
-									<input type="button" value="">
-									<input type="hidden" value="${id }" name="id" >
-								</form> --%>
 								<c:forEach var="k" items="${foodlist}" varStatus="vs">
 									<tr>
 									<!-- id 말고 restaurant받아가서 아이디 확인해서 삭제하는걸로 수정하자.  -->
 										<td style="text-align: left;"><a
-											href="onelist.do?id=${id}&cPage=${pvo.nowPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+											href="onelist.do?id=${id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
 										</td>
 										<td><button onclick="food_del(${k.restaurant})">삭제</button></td>
 									</tr>

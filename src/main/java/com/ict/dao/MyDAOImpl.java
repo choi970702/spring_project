@@ -193,5 +193,73 @@ public class MyDAOImpl implements MyDAO
 	public int updatestar_like(VO vo) throws Exception {
 		return sqlSessionTemplate.update("myproject.star_like", vo);
 	}
+
+	@Override
+	public List<VO> selectMain() throws Exception {
+		return sqlSessionTemplate.selectList("myproject.main");
+	}
+
+	@Override
+	public List<VO> selectMain2() throws Exception {
+		return sqlSessionTemplate.selectList("myproject.main2");
+	}
+
+
+	@Override
+	public List<VO> selectchoice(String search) throws Exception {
+		return sqlSessionTemplate.selectList("myproject.choice1", search);
+	}
+
+	@Override
+	public List<VO> selectchoice2(String search) throws Exception {
+		return sqlSessionTemplate.selectList("myproject.choice2", search);
+	}
+	
+	
+	
+	
+	
+	
+
+	
+	
+	@Override
+	public List<VO> selectstar1(String restaurant) throws Exception {
+		return sqlSessionTemplate.selectList("myproject.star1", restaurant);
+	}
+
+	@Override
+	public List<VO> selectlike1(String restaurant) throws Exception {
+		return sqlSessionTemplate.selectList("myproject.like1", restaurant);
+	}
+	
+	@Override
+	public List<VO> selectSearch1(String str, String str2, String restaurant) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("str", str);
+		map.put("str2", str2);
+		map.put("restaurant", restaurant);
+		return sqlSessionTemplate.selectList("myproject.search1", map);
+	}
+	
+
+	@Override
+	public List<VO> selectstar2(String food_name) throws Exception {
+		return sqlSessionTemplate.selectList("myproject.star2", food_name);
+	}
+
+	@Override
+	public List<VO> selectlike2(String food_name) throws Exception {
+		return sqlSessionTemplate.selectList("myproject.like2", food_name);
+	}
+
+	@Override
+	public List<VO> selectSearch2(String str, String str2, String food_name) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("str", str);
+		map.put("str2", str2);
+		map.put("food_name", food_name);
+		return sqlSessionTemplate.selectList("myproject.search2", map);
+	}
 	
 }

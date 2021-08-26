@@ -151,7 +151,7 @@
 	<!-- idx값 -->
 	<insert id="FVOinsert" parameterType="com.ict.vo.FVO">
 		insert into myfood(idx,writer,content,restaurant,food_star,food_like) 
- 		values(3, #{writer},#{content},#{restaurant},#{food_star},#{food_like})
+ 		values(5, #{writer},#{content},#{restaurant},#{food_star},#{food_like})
 	</insert>
 	
 	<select id="FVOone" parameterType="String" resultType="com.ict.vo.FVO">
@@ -173,6 +173,50 @@
 	<update id="star_like" parameterType="com.ict.vo.VO">
 		update myproject_vo set food_star = #{star}, food_like = #{like} where restaurant = #{restaurant}
 	</update>
+	
+	<select id="main" resultType="com.ict.vo.VO">
+		select * from myproject_vo order by food_star desc limit 2;
+	</select>
+	
+	<select id="main2" resultType="com.ict.vo.VO">
+		select * from myproject_vo order by food_like desc limit 2;
+	</select>
+	
+	<select id="choice1" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where restaurant = #{search}
+	</select>
+	
+	<select id="choice2" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where Food_name = #{search}
+	</select>
+	
+	
+	<select id="star1" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where restaurant like CONCAT('%',#{restaurant},'%') order by food_star desc limit 2;
+	</select>
+	
+	<select id="like1" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where restaurant like CONCAT('%',#{restaurant},'%') order by food_like desc limit 2;
+	</select>
+	
+	<select id="search1" parameterType="map" resultType="com.ict.vo.VO">
+		select * from myproject_vo where place like CONCAT('%',#{str},'%') or 
+		place like CONCAT('%',#{str2},'%') and restaurant like CONCAT('%',#{restaurant},'%')
+	</select>
+	
+	<select id="star2" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where Food_name like CONCAT('%',#{Food_name},'%') order by food_star desc limit 2;
+	</select>
+	
+	<select id="like2" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where Food_name like CONCAT('%',#{Food_name},'%') order by food_like desc limit 2;
+	</select>
+	
+	<select id="search2" parameterType="map" resultType="com.ict.vo.VO">
+		select * from myproject_vo where place like CONCAT('%',#{str},'%') or 
+		place like CONCAT('%',#{str2},'%') and Food_name like CONCAT('%',#{Food_name},'%')
+	</select>
+	
 	
 </mapper>
  

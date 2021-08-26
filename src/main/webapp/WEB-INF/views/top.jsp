@@ -54,12 +54,12 @@
 			<div class="a_div">
 			<c:choose>
 				<c:when test="${login_ok == '1' }">
-					<a href="mypage.do">${id }님 </a> &nbsp;|&nbsp;
-					<a href="logout.do">로그아웃</a>
+					<a href="mypage.do?cPage=${cPage }">${id }님 </a> &nbsp;|&nbsp;
+					<a href="logout.do?cPage=1">로그아웃</a>
 				</c:when>
 				<c:otherwise>
-					<a href="login.do">로그인 </a> &nbsp;|&nbsp;
-					<a href="join.do">회원가입</a>
+					<a href="login.do?cPage=1">로그인 </a> &nbsp;|&nbsp;
+					<a href="join.do?cPage=1">회원가입</a>
 				</c:otherwise>
 			</c:choose>
 			</div>

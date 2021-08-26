@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+
+	
 	.btn
 	{
 		text-align: center;
@@ -56,8 +58,8 @@
 	}
 	img
 	{
-		width: 40%;
-		height: 50%;
+		width: 100%;
+		height: 100%;
 	}
 	fieldset
 	{
@@ -65,12 +67,6 @@
 		float: left;
 		margin-left: 1%;
 		margin-right: 1%;
-	}
-	textarea 
-	{
-		height: 80px;
-		width: 50%;
-		text-align: center;
 	}
 	footer
 	{
@@ -89,6 +85,36 @@
 	#menu_id > div:hover
 	{
 		background-color: black;
+	}
+		table,th,td
+	{
+		border: 1px solid gray;
+		border-spacing: 0px;
+		padding: 1%;
+	}
+	tr 
+	{
+		
+	    text-align:center;
+	    padding:4px 10px;
+	    background-color: #F6F6F6;
+	    margin: 0px;
+	}
+	
+	th 
+	{
+		width:120px;
+	    text-align:center;
+	    padding:4px 10px;
+	    background-color: silver;
+	    margin: 0px;
+	}
+	table 
+	{
+		margin: auto;
+		margin-top: 5%;
+		width: 80%;
+		height: 350px;
 	}
 </style>
 <script type="text/javascript">
@@ -148,37 +174,93 @@
 		<div>
 			<fieldset>
 				<legend>먹을거리 추천</legend>
-				<%-- <c:choose>
-					<c:when test="${empty list}">
+				<table>
+					<thead>
 						<tr>
-							<td colspan="4"><h2>원하시는 자료가 존재하지 않습니다</h2></td>
+							<th></th><th></th>
 						</tr>
-					</c:when>
-					<c:otherwise>
-						<c:forEach var="k" items="${list}" varStatus="vs">
-							<tr>
-								<td>${pvo.totalRecord-((pvo.nowPage-1)*pvo.numPerPage+vs.index)}</td>
-								<td style="text-align: left;"><a
-									href="onelist.do??id=${id}&cPage=${pvo.nowPage}&restaurant=${k.restaurant}">${k.Food_name }</a>
-								</td>
-								<td>${k.title }</td>
-							</tr>
-						</c:forEach>
-					</c:otherwise>
-				</c:choose> --%>
+					</thead>
+					<tbody>
+
+						<c:choose>
+							<c:when test="${empty list}">
+								<tr>
+									<td colspan="4"><h2>원하시는 자료가 존재하지 않습니다</h2></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="k" items="${list}" varStatus="vs">
+									<tr>
+										<td rowspan="4" style="text-align: left;"><img alt=""
+											src="resources/image/${k.file_name }"></td>
+										<td>가게이름 : <a
+											href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+										</td>
+									</tr>
+									<tr>
+										<td>주메뉴 : ${k.food_name }</td>
+									</tr>
+									<tr>
+										<td>영업 시간 : ${k.restaurant_time }</td>
+									</tr>
+									<tr>
+										<td>위치 : ${k.place }</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
 			</fieldset>
 		</div>
 		<div>
 			<fieldset>
 				<legend>가볼만한 가게 추천</legend>
-				<div>
+				<table>
+					<thead>
+						<tr>
+							<th></th><th></th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<c:choose>
+							<c:when test="${empty list2}">
+								<tr>
+									<td colspan="4"><h2>원하시는 자료가 존재하지 않습니다</h2></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="k" items="${list2}" varStatus="vs">
+									<tr>
+										<td rowspan="4" style="text-align: left;"><img alt=""
+											src="resources/image/${k.file_name }"></td>
+										<td>가게이름 : <a
+											href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+										</td>
+									</tr>
+									<tr>
+										<td>주메뉴 : ${k.food_name }</td>
+									</tr>
+									<tr>
+										<td>영업 시간 : ${k.restaurant_time }</td>
+									</tr>
+									<tr>
+										<td>위치 : ${k.place }</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+						<!-- <div>
 					<img alt="" src="resources/image/pic1.jpg">
 					<textarea>~~~~~~~~~~~</textarea>
 				</div>
 				<div>
 					<img alt="" src="resources/image/pic1.jpg">
 					<textarea>~~~~~~~~~~~</textarea>
-				</div>
+				</div> -->
+					</tbody>
+				</table>
 			</fieldset>
 		</div>
 	</div>

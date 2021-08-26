@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,27 +75,41 @@
 	}
 	img
 	{
-		width: 40%;
-		height: 50%;
+		width: 100%;
+		height: 100%;
+	}
+	table,th,td
+	{
+		border: 1px solid gray;
+		border-spacing: 0px;
+		padding: 1%;
+	}
+	tr 
+	{
+		
+	    text-align:center;
+	    padding:4px 10px;
+	    background-color: #F6F6F6;
+	    margin: 0px;
+	}
+	
+	th 
+	{
+		width:120px;
+	    text-align:center;
+	    padding:4px 10px;
+	    background-color: silver;
+	    margin: 0px;
+	}
+	table 
+	{
+		margin: auto;
+		margin-top: 5%;
+		width: 80%;
+		height: 350px;
 	}
 </style>
 <script type="text/javascript">
-	function imgclick1() 
-	{
-		location.href="onelist.do";
-	}
-	function imgclick2() 
-	{
-		location.href="onelist.do";
-	}
-	function imgclick3() 
-	{
-		location.href="onelist.do";
-	}
-	function imgclick4() 
-	{
-		location.href="onelist.do";
-	}
 	function boardlist() 
 	{
 		location.href="board.do?cPage=${cPage}";
@@ -116,37 +131,97 @@
 	<div>
 			<fieldset>
 				<legend>이달의 추천 음식</legend>
-				<form style="text-align: center;" action="food_restaurant2.do" method="post">
-					<input type="radio" name="food_pick" value="리뷰순">리뷰가 많은순
-					<input type="radio" name="food_pick" value="별점순">별점이 높은순
+				<form style="text-align: center;" action="food_restaurant2.do?cPage=${cPage}">
+					<input type="radio" name="food_pick" value="추천순">추천이 많은순
+					<input type="radio" name="food_pick" checked="checked" value="별점순">별점이 높은순
 					<input type="submit" value="검색">
+					<input type="hidden" name="cPage" value="${cPage }">
 				</form>
-				<div>
-					<img alt="" src="resources/image/pic1.jpg" onclick="imgclick1()">
-					<textarea>~~~~~~~~~~~</textarea>
-				</div>
-				<div>
-					<img alt="" src="resources/image/pic1.jpg" onclick="imgclick2()">
-					<textarea>~~~~~~~~~~~</textarea>
-				</div>
+				<table>
+					<thead>
+						<tr>
+							<th></th><th></th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<c:choose>
+							<c:when test="${empty list}">
+								<tr>
+									<td colspan="4"><h2>원하시는 자료가 존재하지 않습니다</h2></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="k" items="${list}" varStatus="vs">
+									<tr>
+										<td rowspan="4" style="text-align: left;"><img alt=""
+											src="resources/image/${k.file_name }"></td>
+										<td>가게이름 : <a
+											href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+										</td>
+									</tr>
+									<tr>
+										<td>주메뉴 : ${k.food_name }</td>
+									</tr>
+									<tr>
+										<td>영업 시간 : ${k.restaurant_time }</td>
+									</tr>
+									<tr>
+										<td>위치 : ${k.place }</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
 			</fieldset>
 		</div>
 		<div>
 			<fieldset>
 				<legend>이달의 추천 가게</legend>
-				<form style="text-align: center;" action="food_restaurant2.do" method="post">
-					<input type="radio" name="restaurant_pick" value="리뷰순">리뷰가 많은순
-					<input type="radio" name="restaurant_pick" value="별점순">별점이 높은순
+				<form style="text-align: center;" action="food_restaurant2.do?cPage=${cPage}">
+					<input type="radio" name="restaurant_pick" value="추천순">추천이 많은순
+					<input type="radio" name="restaurant_pick" checked="checked" value="별점순">별점이 높은순
 					<input type="submit" value="검색">
+					<input type="hidden" name="cPage" value="${cPage }">
 				</form>
-				<div>
-					<img alt="" src="resources/image/pic1.jpg" onclick="imgclick3()">
-					<textarea>~~~~~~~~~~~</textarea>
-				</div>
-				<div>
-					<img alt="" src="resources/image/pic1.jpg" onclick="imgclick4()">
-					<textarea>~~~~~~~~~~~</textarea>
-				</div>
+				<table>
+					<thead>
+						<tr>
+							<th></th><th></th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<c:choose>
+							<c:when test="${empty list2}">
+								<tr>
+									<td colspan="4"><h2>원하시는 자료가 존재하지 않습니다</h2></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="k" items="${list2}" varStatus="vs">
+									<tr>
+										<td rowspan="4" style="text-align: left;"><img alt=""
+											src="resources/image/${k.file_name }"></td>
+										<td>가게이름 : <a
+											href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+										</td>
+									</tr>
+									<tr>
+										<td>주메뉴 : ${k.food_name }</td>
+									</tr>
+									<tr>
+										<td>영업 시간 : ${k.restaurant_time }</td>
+									</tr>
+									<tr>
+										<td>위치 : ${k.place }</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
 			</fieldset>
 		</div>
 	<div>

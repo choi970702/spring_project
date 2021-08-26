@@ -43,11 +43,23 @@ public class MyController
 	public ModelAndView mainCommand(@RequestParam("cPage")String cPage, HttpSession session)
 	{
 		ModelAndView mv = new ModelAndView("main");
-		String start = (String)session.getAttribute("msg");
-		// String str = start.substring(0,10);
-		// System.out.println(str);
-		mv.addObject("cPage", cPage);
-		return mv;
+		
+		
+		try {
+			List<VO> list = myservice.selectMain();
+			List<VO> list2 = myservice.selectMain2();
+			
+			mv.addObject("list", list);
+			mv.addObject("list2", list2);
+			mv.addObject("cPage", cPage);
+			return mv;
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+		return null;
 	}
 	
 	/* @RequestMapping("search.do")
@@ -62,25 +74,74 @@ public class MyController
 	
 	@RequestMapping("search.do")
 	public ModelAndView search3Command(@RequestParam("search")String search,
-			@ModelAttribute("choice")String choice, @ModelAttribute("cPage")String cPage)
+			@ModelAttribute("choice")String choice, @ModelAttribute("cPage")String cPage, HttpSession session)
 	{
 		ModelAndView mv = new ModelAndView("search");
+		
 		mv.addObject("search", search);
 		mv.addObject("choice", choice);
-		return mv;
+		try {
+			if (choice == "가게이름") 
+			{
+				List<VO> list = myservice.selectchoice(search);
+				mv.addObject("list", list);
+			}else if(choice == "음식이름")
+			{
+				List<VO> list = myservice.selectchoice2(search);
+				mv.addObject("list", list);
+
+			}
+			return mv;
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	// search_ok.do
 	@RequestMapping("search_ok.do")
-	public ModelAndView search_okCommand(HttpServletRequest request, @ModelAttribute("cPage")String cPage)
+	public ModelAndView search_okCommand(HttpServletRequest request, @ModelAttribute("cPage")String cPage, HttpSession session)
 	{
 		ModelAndView mv = new ModelAndView("search");
 		String choice = request.getParameter("choice");
 		String choose = request.getParameter("choose");
 		
-		mv.addObject("choice", choice);
-		mv.addObject("choose", choose);
-		return mv;
+		String start = (String)session.getAttribute("msg");
+		String str = start.substring(0,10);
+		String str2 = start.substring(0,14);
+		System.out.println(str);
+		System.out.println(str2);
+		
+		try {
+			if (request.getParameter("choice") == "거리순") {
+				List<VO> list2 = myservice.selectSearch1(str,str2,request.getParameter("search"));
+				List<VO> list3 = myservice.selectstar1(request.getParameter("search"));
+				List<VO> list4 = myservice.selectlike1(request.getParameter("search"));
+				
+				mv.addObject("list2", list2);
+				mv.addObject("list3", list3);
+				mv.addObject("list4", list4);
+				
+			}else
+			{
+				List<VO> list5 = myservice.selectSearch2(str,str2,request.getParameter("search"));
+				List<VO> list6 = myservice.selectstar2(request.getParameter("search"));
+				List<VO> list7 = myservice.selectlike2(request.getParameter("search"));
+				
+				mv.addObject("list5", list5);
+				mv.addObject("list6", list6);
+				mv.addObject("list7", list7);
+			}
+			
+			
+			mv.addObject("choose", choose);
+			mv.addObject("choice", choice);
+			return mv;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	/* @RequestMapping("search2.do")
@@ -149,15 +210,43 @@ public class MyController
 	}
 	
 	@RequestMapping("food_restaurant.do")
-	public ModelAndView food_restaurantCommand(@ModelAttribute("cPage")String cPage)
+	public ModelAndView food_restaurantCommand(@ModelAttribute("cPage")String cPage, HttpServletRequest request)
 	{
-		return new ModelAndView("food_restaurant");
+		ModelAndView mv = new ModelAndView("food_restaurant");
+		try {
+			List<VO> list = myservice.selectMain();
+			List<VO> list2 = myservice.selectMain2();
+			mv.addObject("list", list);
+			mv.addObject("list2", list2);
+			mv.addObject("cPage", cPage);
+			return mv;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	@RequestMapping("food_restaurant2.do")
-	public ModelAndView food_restaurant2Command(@ModelAttribute("cPage")String cPage)
+	public ModelAndView food_restaurant2Command(@ModelAttribute("cPage")String cPage, HttpServletRequest request)
 	{
-		return new ModelAndView("food_restaurant2");
+		ModelAndView mv = new ModelAndView("food_restaurant2");
+		try {
+			List<VO> list = myservice.selectMain();
+			List<VO> list2 = myservice.selectMain2();
+			if (request.getParameter("food_pick") != null) {
+				mv.addObject("food_pick",request.getParameter("food_pick"));
+			}
+			if (request.getParameter("restaurant_pick") != null) {
+				mv.addObject("restaurant_pick",request.getParameter("restaurant_pick"));
+			}
+			mv.addObject("list", list);
+			mv.addObject("list2", list2);
+			mv.addObject("cPage", cPage);
+			return mv;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	@RequestMapping("board.do")
@@ -500,13 +589,12 @@ public class MyController
 	}
 	
 	@RequestMapping("logout.do")
-	public ModelAndView logoutCommand(HttpSession session)
+	public ModelAndView logoutCommand(HttpSession session, @ModelAttribute("cPage")String cPage)
 	{
-		ModelAndView mv = new ModelAndView("main");
 		session.removeAttribute("id");
 		session.removeAttribute("u_id");
 		session.removeAttribute("login_ok");
-		return mv;
+		return new ModelAndView("redirect:main.do");
 	}
 	
 	@RequestMapping("pw_change.do")
@@ -620,9 +708,8 @@ public class MyController
 	public ModelAndView main_msgCommand(@RequestParam("msg")String msg, HttpSession session, 
 			@ModelAttribute("cPage")String cPage)
 	{
-		ModelAndView mv = new ModelAndView("main");
 		session.setAttribute("msg", msg);
-		return mv;
+		return new ModelAndView("redirect:main.do");
 	}
 	
 	@RequestMapping("board_onelist.do")

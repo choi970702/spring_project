@@ -184,5 +184,68 @@ public class MyServiceImpl implements MyService
 	public int updatestar_like(VO vo) throws Exception {
 		return myDAO.updatestar_like(vo);
 	}
+
+	@Override
+	public List<VO> selectMain() throws Exception {
+		return myDAO.selectMain();
+	}
+
+	@Override
+	public List<VO> selectMain2() throws Exception {
+		return myDAO.selectMain2();
+	}
+
+	
+
+	@Override
+	public List<VO> selectchoice(String search) throws Exception {
+		return myDAO.selectchoice(search);
+	}
+
+	@Override
+	public List<VO> selectchoice2(String search) throws Exception {
+		return myDAO.selectchoice2(search);
+	}
+
+	
+	
+	
+	
+	@Override
+	public List<VO> selectstar1(String restaurant) throws Exception {
+		return myDAO.selectstar1(restaurant);
+	}
+
+	@Override
+	public List<VO> selectlike1(String restaurant) throws Exception {
+		return myDAO.selectlike1(restaurant);
+	}
+
+	@Override
+	public List<VO> selectSearch1(String str, String str2, String restaurant) throws Exception {
+		return myDAO.selectSearch1(str, str2, restaurant);
+	}
+	
+	@Override
+	public List<VO> selectstar2(String food_name) throws Exception {
+		return myDAO.selectstar2(food_name);
+	}
+
+	@Override
+	public List<VO> selectlike2(String food_name) throws Exception {
+		return myDAO.selectlike2(food_name);
+	}
+
+	@Override
+	public List<VO> selectSearch2(String str, String str2, String food_name) throws Exception {
+		return myDAO.selectSearch2(str, str2, food_name);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

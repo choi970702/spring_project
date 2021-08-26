@@ -107,4 +107,34 @@ public interface MyService
 	// vo star, like 점수 넣기
 	int updatestar_like(VO vo) throws Exception;
 	
+	// main에 보여줄 list
+	List<VO> selectMain() throws Exception;
+		
+	// main에 보여줄 list2
+	List<VO> selectMain2() throws Exception;
+	
+	// choice
+	List<VO> selectchoice(String search) throws Exception;
+		
+	// choice2
+	List<VO> selectchoice2(String search) throws Exception;
+	
+	// search star
+	List<VO> selectstar1(String restaurant) throws Exception;
+			
+	// search like
+	List<VO> selectlike1(String restaurant) throws Exception;
+		
+	// search 거리
+	List<VO> selectSearch1(String str, String str2, String restaurant) throws Exception;
+		
+	// search star2
+	List<VO> selectstar2(String food_name) throws Exception;
+				
+	// search like2
+	List<VO> selectlike2(String food_name) throws Exception;
+		
+	// search 거리2
+	List<VO> selectSearch2(String str, String str2, String food_name) throws Exception;
+	
 }
